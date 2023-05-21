@@ -1,0 +1,4 @@
+node_modules
+firebaseKey.json
+src/emailService/emailKey_email.ts
+src/emailService/emailKey_password.ts
