@@ -1,4 +1,5 @@
 import { FirestoreDB } from "./firestore";
+import { ForumDataDB } from "./forumData/forumDataDB";
 import { getMaxIds } from "./MaxIDs/MaxIDs";
 import { UsersDB } from "./users/userDB";
 
@@ -52,6 +53,24 @@ export const getMaxIDSingletonFactory = (function () {
                 getMaxIDs = createInstance();
             }
             return getMaxIDs;
+        }
+    };
+})();
+
+export const getForumDataDBSingletonFactory = (function () {
+    var instance: ForumDataDB;
+
+    function createInstance(): ForumDataDB {
+        var object = new ForumDataDB();
+        return object;
+    }
+
+    return {
+        getInstance: function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
         }
     };
 })();

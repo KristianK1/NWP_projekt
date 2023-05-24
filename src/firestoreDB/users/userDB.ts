@@ -9,13 +9,6 @@ import { EmailService, emailServiceSingletonFactory } from '../../emailService/e
 import { IEmailConfirmationData, IForgotPasswordData } from 'emailService/emailModels';
 var userDBObj: UsersDB;
 
-export function createUserDBInstance() {
-    userDBObj = new UsersDB();
-}
-
-export function getUserDBInstance(): UsersDB {
-    return userDBObj;
-}
 export class UsersDB {
 
     static usersCollName = 'users';

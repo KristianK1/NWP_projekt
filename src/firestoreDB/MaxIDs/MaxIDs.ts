@@ -28,14 +28,6 @@ export class getMaxIds {
     async getMaxUserId(autoIncrement: boolean): Promise<number> {return await this.getMax(this.userKey, autoIncrement)}
     async setMaxUserId(id: number) { await this.setMax(this.userKey, id) }
 
-    async getMaxDeviceId(autoIncrement: boolean): Promise<number> { return await this.getMax(this.deviceKey, autoIncrement) }
-    async setMaxDeviceId(id: number) { await this.setMax(this.deviceKey, id) }
-
-    async getMaxFieldGroupId(autoIncrement: boolean): Promise<number> { return await this.getMax(this.fieldGroupKey, autoIncrement) }
-    async setMaxFieldGroupId(id: number) { await this.setMax(this.fieldGroupKey, id) }
-
-    async getMaxFieldId(autoIncrement: boolean): Promise<number> { return await this.getMax(this.fieldKey, autoIncrement) }
-    async setMaxFieldId(id: number) { await this.setMax(this.fieldKey, id) }
 
 
     private async getMax(key: string, autoIncrement?: boolean): Promise<number> {

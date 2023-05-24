@@ -7,4 +7,4 @@
  Express.js
  Firestore
  Nodemailer
-  
+ Typescript
