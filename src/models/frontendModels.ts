@@ -14,3 +14,8 @@ export enum ELogoutReasons {
     LogoutAll,
     LogoutMyself //no toast on frontend
 }
+
+export interface FrontEndCategories {
+    id: number,
+    title: string,
+}

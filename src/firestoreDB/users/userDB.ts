@@ -139,7 +139,6 @@ export class UsersDB {
             password: password,
             username: username,
             email: email,
-            userRight: { rightsToDevices: [], rightsToGroups: [], rightsToFields: [], rightsToComplexGroups: [] },
         }
 
         if(email !== ""){

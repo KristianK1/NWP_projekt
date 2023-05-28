@@ -5,6 +5,7 @@ import { MyWebSocketServer } from './WSRouters/WSRouter';
 import { wsServerSingletonFactory } from './WSRouters/WSRouterSingletonFactory';
 import { emailServiceSingletonFactory } from './emailService/emailService';
 import * as path from 'path';
+import { getForumDataDBSingletonFactory } from './firestoreDB/singletonService';
 
 let http = require('http');
 let cors = require('cors');
@@ -29,7 +30,7 @@ export class Server {
         this.setupWSS();
         this.startServer();
         this.startEmailService();
-        // this.startTimeout();
+        this.test();
     }
 
     setConfig() {
@@ -57,7 +58,7 @@ export class Server {
             res.send('dummy');
         });
 
-        this.app.use('/email', emailRouter)
+        this.app.use('/email', emailRouter);
 
         var mainRouter = require('./expressRouters/expressRouter.ts');
         this.app.use('/API', mainRouter);
@@ -74,14 +75,10 @@ export class Server {
         this.wss.setupServer(this.wsServer);
     }
 
-
-    startTimeout() {
-        const timeout = setInterval(() => {
-            let x = 3;
-        }, 5 * 1000);
-    }
-
     startEmailService(){
         emailServiceSingletonFactory.getInstance();
+    }
+
+    async test(){
     }
 }

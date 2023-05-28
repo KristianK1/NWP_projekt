@@ -1,11 +1,8 @@
-import { IUserRight } from "./userRightsModels";
-
 export interface IUser {
     id: number,
     username: string,
     email: string,
     password: string,
-    userRight: IUserRight,
 }
 
 export interface IAuthToken {
@@ -15,11 +12,13 @@ export interface IAuthToken {
 }
 
 export interface ICategory {
+    id: number,
     title: string,
     maxTopicId: number,
 }
 
 export interface ITopic {
+    id: number,
     title: string,
     timestamp: string,
     createdBy: string,
@@ -29,6 +28,7 @@ export interface ITopic {
 }
 
 export interface IComment {
+    id: number,
     createdBy: string,
     text: string,
 }
