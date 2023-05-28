@@ -21,7 +21,8 @@ export interface ITopic {
     id: number,
     title: string,
     timestamp: string,
-    createdBy: string,
+    username: string,
+    userId: number,
     text: string,
     maxCommentId: number,
     // comments: IComment[] | undefined,
@@ -29,6 +30,7 @@ export interface ITopic {
 
 export interface IComment {
     id: number,
-    createdBy: string,
+    username: string,
+    userId: number,
     text: string,
 }

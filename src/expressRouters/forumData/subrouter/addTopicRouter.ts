@@ -22,9 +22,10 @@ router.post('/', async (req: any, res: any) => {
     }
 
     try {
-        await forumDataDB.addTopic(request.categoryId, user.username, request.title, request.text);
+        await forumDataDB.addTopic(request.categoryId, user, request.title, request.text);
     } catch {
         res.sendStatus(400);
+        return;
     }
 
     res.sendStatus(200);

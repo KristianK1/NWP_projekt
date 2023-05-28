@@ -11,3 +11,16 @@ export interface IAddCommentRequest {
     topicId: number,
     text: string,
 }
+
+export interface IDeleteTopicRequest {
+    authToken: string,
+    categoryId: number,
+    topicid: number
+}
+
+export interface IDeleteCommentRequest {
+    authToken: string,
+    categoryId: number,
+    topicId: number,
+    commentId: number,
+}

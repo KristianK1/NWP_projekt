@@ -3,7 +3,7 @@ import { getMaxIds } from "firestoreDB/MaxIDs/MaxIDs";
 import { FirestoreDB } from "firestoreDB/firestore";
 import { firestoreSingletonFactory, getMaxIDSingletonFactory } from "../../firestoreDB/singletonService";
 import { getCurrentTimeISO } from "../../generalStuff/timeHandlers";
-import { ICategory, IComment, ITopic } from "models/basicModels";
+import { ICategory, IComment, ITopic, IUser } from "models/basicModels";
 
 
 
@@ -39,7 +39,7 @@ export class ForumDataDB {
         return categories;
     }
 
-    
+
     async getTopics(category: number): Promise<ITopic[]> {
         let categoryData: ICategory = await this.firestore.getDocumentData(`${ForumDataDB.catsCollName}`, `${ForumDataDB.catsDocNamePrefix}${category}`);
         let maxID = categoryData.maxTopicId;
@@ -54,6 +54,14 @@ export class ForumDataDB {
             }
         }
         return topics;
+    }
+
+    async getTopic(categoryId: number, topicId: number): Promise<ITopic> {
+        let topicCollName = this.getTopicCollName(categoryId);
+        let topicDocName = this.getTopicDocName(topicId);
+
+        let topic: ITopic = await this.firestore.getDocumentData(topicCollName, topicDocName);
+        return topic;
     }
 
     async getComments(categoryId: number, topicId: number): Promise<IComment[]> {
@@ -78,7 +86,12 @@ export class ForumDataDB {
         return comments;
     }
 
-    async addTopic(category: number, owner: string, title: string, text: string) {
+    async getComment(categoryId: number, topicId: number, commentId: number): Promise<IComment> {
+        return await this.firestore.getDocumentData(this.getCommentCollName(categoryId, topicId), this.getCommentDocName(commentId));
+    }
+
+    async addTopic(category: number, owner: IUser, title: string, text: string) {
+
         let categoryData: ICategory = await this.firestore.getDocumentData(ForumDataDB.catsCollName, ForumDataDB.catsDocNamePrefix + category);
         let newId = categoryData.maxTopicId + 1;
 
@@ -92,7 +105,8 @@ export class ForumDataDB {
         let newTopicData: ITopic = {
             id: newId,
             title: title,
-            createdBy: owner,
+            username: owner.username,
+            userId: owner.id,
             text: text,
             timestamp: getCurrentTimeISO(),
             maxCommentId: 0,
@@ -101,7 +115,10 @@ export class ForumDataDB {
         await this.firestore.setDocumentValue(newCollPath, newDocName, newTopicData);
     }
 
-    async addComment(category: number, topic: number, owner: string, text: string) {
+    async addComment(category: number, topic: number, owner: IUser | undefined, text: string) {
+        let username = owner?.username || 'Neregistrirani korisnik';
+        let userId = owner?.id || -1;
+
         let topicCollectionPath = `${ForumDataDB.catsCollName}/${ForumDataDB.catsDocNamePrefix}${category}/${ForumDataDB.topicsCollName}`
         let topicDocumentName = `${ForumDataDB.topicDocNamePrefix}${topic}`
         let topicData: ITopic = await this.firestore.getDocumentData(topicCollectionPath, topicDocumentName);
@@ -117,19 +134,26 @@ export class ForumDataDB {
 
         let newCommentData: IComment = {
             id: newCommentId,
-            createdBy: owner,
+            username: username,
+            userId: userId,
             text: text,
         }
 
         await this.firestore.setDocumentValue(commentCollectionPath, commentDocName, newCommentData);
     }
 
-    async deleteTopic(categoryId: number, topicId: number) {
-
+    async deleteTopic(categoryId: number, topicId: number, userId: number) {
+        let topic: ITopic = await this.getTopic(categoryId, topicId);
+        if (topic.userId === userId) {
+            await this.firestore.deleteDocument(this.getTopicCollName(categoryId), this.getTopicDocName(topicId));
+        }
     }
 
-    async deleteComment(categoryId: number, topicId: number, commentId: number) {
-
+    async deleteComment(categoryId: number, topicId: number, commentId: number, userId: number) {
+        let comment = await this.getComment(categoryId, topicId, commentId);
+        if (comment.userId === userId) {
+            await this.firestore.deleteDocument(this.getCommentCollName(categoryId, topicId), this.getCommentDocName(commentId));
+        }
     }
 
 
