@@ -33,4 +33,5 @@ export interface IComment {
     username: string,
     userId: number,
     text: string,
+    timestamp: string,
 }

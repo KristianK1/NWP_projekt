@@ -16,7 +16,7 @@ router.post('/', async (req: any, res: any) => {
     let user: IUser | undefined;
     if (request.authToken) {
         try {
-            let user = await userDB.getUserByToken(request.authToken, true);
+            user = await userDB.getUserByToken(request.authToken, true);
         } catch (e) {
             res.sendStatus(400);
             return;

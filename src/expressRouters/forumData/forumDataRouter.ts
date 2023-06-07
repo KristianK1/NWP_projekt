@@ -23,4 +23,8 @@ router.use('/addTopic', addTopicRouter);
 var addCommentRouter = require('./subrouter/addCommentRouter');
 router.use('/addComment', addCommentRouter);
 
+var addCommentRouter = require('./subrouter/getTopicRouter');
+router.use('/topic', addCommentRouter);
+
+
 module.exports = router;

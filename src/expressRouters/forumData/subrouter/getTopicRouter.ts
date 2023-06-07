@@ -10,7 +10,7 @@ router.get('/:catId/:topicId', async (req: any, res: any) => {
     let catId = req.params.catId;
     let topicId = req.params.topicId;
     try{
-        res.json(await forumDataDB.getComments(catId,topicId));
+        res.json(await forumDataDB.getTopic(catId, topicId));
     }catch{
         res.sendStatus(400);
     }

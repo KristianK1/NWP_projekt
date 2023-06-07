@@ -12,7 +12,7 @@ var forumDataDB: ForumDataDB = getForumDataDBSingletonFactory.getInstance();
 
 router.post('/', async (req: any, res: any) => {
     let request: IAddTopicRequest = req.body;
-
+    console.log(request);
     let user: IUser;
     try {
         user = await userDB.getUserByToken(request.authToken, true);

@@ -4,6 +4,7 @@ import { FirestoreDB } from "firestoreDB/firestore";
 import { firestoreSingletonFactory, getMaxIDSingletonFactory } from "../../firestoreDB/singletonService";
 import { getCurrentTimeISO } from "../../generalStuff/timeHandlers";
 import { ICategory, IComment, ITopic, IUser } from "models/basicModels";
+import { log } from "console";
 
 
 
@@ -116,6 +117,8 @@ export class ForumDataDB {
     }
 
     async addComment(category: number, topic: number, owner: IUser | undefined, text: string) {
+        console.log('user: ' + JSON.stringify(owner));
+        
         let username = owner?.username || 'Neregistrirani korisnik';
         let userId = owner?.id || -1;
 
@@ -137,6 +140,7 @@ export class ForumDataDB {
             username: username,
             userId: userId,
             text: text,
+            timestamp: getCurrentTimeISO(),
         }
 
         await this.firestore.setDocumentValue(commentCollectionPath, commentDocName, newCommentData);
