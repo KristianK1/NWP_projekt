@@ -20,12 +20,14 @@ router.post('/', async (req: any, res: any) => {
             await userDb.removeAllMyTokens(request.dontLogoutToken);
             wsServer.logoutAllUsersSessions(request.userId, ELogoutReasons.ChangedPassword, request.dontLogoutToken);
         }
+        res.status(200);
+        res.send(JSON.stringify({"message": "OK"}));
     } catch (e) {
         res.status(400);
         res.send(e.message);
         return;
     }
-    res.sendStatus(200);
+    return;
 });
 
 module.exports = router;
