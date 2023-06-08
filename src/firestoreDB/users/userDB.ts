@@ -138,7 +138,7 @@ export class UsersDB {
             id: maxIDdoc + 1,
             password: password,
             username: username,
-            email: email,
+            email: '',
         }
 
         if(email !== ""){
