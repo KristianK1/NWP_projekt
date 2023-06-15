@@ -15,7 +15,7 @@ var deleteTopicRouter = require('./subrouter/deleteTopicRouter.ts');
 router.use('/deleteTopic', deleteTopicRouter);
 
 var deleteCommentRouter = require('./subrouter/deleteCommentRouter.ts');
-router.use('/deleteTopic', deleteCommentRouter);
+router.use('/deleteComment', deleteCommentRouter);
 
 var addTopicRouter = require('./subrouter/addTopicRouter.ts');
 router.use('/addTopic', addTopicRouter);
